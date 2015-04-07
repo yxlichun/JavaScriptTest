@@ -1,2 +1,0 @@
-# JavaScriptTest
-Sort &amp; Pattern
