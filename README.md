@@ -1,3 +1,4 @@
 # JavaScriptTest
 Sort &amp; Pattern
-@lc
+@lc<br>
+testSort&OCPAdvanced.html----Seven classic sorting algorithm developed by javascript language
