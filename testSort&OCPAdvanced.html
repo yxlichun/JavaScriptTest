@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sort</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<script type="text/javascript">	
+	function sortCreator(){
+		var that = {};		
+
+		that.sortMethod = function(){
+			throw "not implemented";
+		}		
+		that.sort = function(sortNum){
+			var strArray = sortNum.split(","),
+				numArray = [];
+			for(var i = 0, len = strArray.length; i < len; i++){
+				numArray[i] = parseInt(strArray[i]);
+			}
+			var startTime = new Date();
+			that.sortMethod(numArray);
+			var endTime = new Date();
+			$("#result").append("<li>耗时：" + (endTime - startTime) + "</li>");
+		}
+		return that;		
+	}	
+	
+	function bubbleSortCreator(){
+		var that = sortCreator();
+		
+		that.sortMethod = function(numArray){
+			bubbleSort(numArray);
+		}
+		return that;
+	}
+	function fastSortCreator(){
+		var that = sortCreator();
+		
+		that.sortMethod = function(numArray){
+			fastSort(numArray);
+		}
+		return that;
+	}
+	function choiceSortCreator(){
+		var that = sortCreator();
+		
+		that.sortMethod = function(numArray){
+			choiceSort(numArray);
+		}
+		return that;
+	}
+	function heapSortCreator(){
+		var that = sortCreator();
+		
+		that.sortMethod = function(numArray){
+			heapSort(numArray);
+		}
+		return that;
+	}
+	function insertSortCreator(){
+		var that = sortCreator();
+		
+		that.sortMethod = function(numArray){
+			insertSort(numArray);
+		}
+		return that;
+	}
+	function shellSortCreator(){
+		var that = sortCreator();
+		
+		that.sortMethod = function(numArray){
+			shellSort(numArray);
+		}
+		return that;
+	}
+	function mergeSortCreator(){
+		var that = sortCreator();
+		
+		that.sortMethod = function(numArray){
+			mergeSort(numArray);
+		}
+		return that;
+	}
+	function verifyInput(str){
+		var responseMessage = "";
+		if(str.indexOf("\,") == -1){
+			responseMessage = "请至少提交两个数字，中间以逗号分隔。";
+		}else{
+			var numArray = str.split(","),
+				re = new RegExp("^[0-9]+$");
+			for(var i = 0, len = numArray.length; i < len; i++){
+				if(!re.test(numArray[i])){
+					responseMessage = "请确保输入均为数字。";
+					break;
+				}
+			}
+		}
+		return responseMessage;
+	}
+	function bubbleSort(numArray){
+		var len = numArray.length,
+			keyNum, flag = true;
+		for(var i = 0; i < len; i++){	
+			flag = true;		
+			for(var j = 0; j < len - i; j++){
+				if(numArray[j] > numArray[j+1]){
+					keyNum = numArray[j];
+					numArray[j] = numArray[j+1];
+					numArray[j+1] = keyNum;
+					flag = false
+				}
+			}
+			//$("#result").append("<li>" + numArray.join() + "</li>");
+			if(flag){
+				break;
+			}
+			
+		}
+	}
+	function fastSort(numArray, start, end){
+		var len = numArray.length;
+		if(start == undefined)
+			start = 0;
+		if(end == undefined)
+			end = len;
+
+		var	keyNum = numArray[start], 
+			flag = start,
+			type = 1,
+			startKeep = start,
+			endKeep = end;
+
+		if(end == start){
+			return;
+		}else{
+			while(start < end){
+				if(type == 1){
+					if(numArray[end] < keyNum){
+						numArray[flag] = numArray[end];					
+						flag = end;
+						start ++;
+						type = 2;
+					}else{
+						end --;
+					}
+				}else{
+					if(numArray[start] > keyNum){
+						numArray[flag] = numArray[start];
+						flag = start;
+						end --;	
+						type = 1;
+					}else{
+						start ++;
+					}
+				}				
+			}			
+			numArray[flag] = keyNum;
+			//$("#result").append("<li>" + numArray.join() + "</li>");
+			if (flag != 0)
+				fastSort(numArray, startKeep, flag);
+			if (flag != len)
+				fastSort(numArray, flag + 1, endKeep);	
+		}
+
+	}
+	function choiceSort(numArray){
+		var base, baseIndx,
+			len = numArray.length;
+		for(var i = 0; i < len; i++){
+			base = numArray[i];
+			baseIndx = i;
+			for(var j = i; j < len; j++){
+				if(numArray[j] < base){
+					base = numArray[j];
+					baseIndx = j;
+				}
+			}
+			numArray[baseIndx] = numArray[i];
+			numArray[i] = base;
+			//$("#result").append("<li>" + numArray.join() + "</li>");
+		}
+		
+	}
+	function heapSort(numArray){
+		var len = numArray.length, temp;
+		//构建小根堆
+		minRootHeap(numArray, len - 1);		
+		//调整小根堆
+		for(var i = len - 1; i >= 1; i--){			
+			temp = numArray[i];
+			numArray[i] = numArray[0];
+			numArray[0] = temp;
+			if(i - 1 > 0)
+				atom(numArray, 0, 1, 2, i - 1);
+			//$("#result").append("<li>" + numArray.join() + "</li>");
+		}
+		function minRootHeap(numArray, end){		
+			for(var i = end; i > 0; i--){
+				var parentId, j, k;
+				//寻找那一小堆
+				parentId = Math.floor((i - 1) / 2);			
+				if(i % 2 == 1){
+					j = i;
+				}else{					
+					j = i - 1;
+					k = i;
+					i --;
+				}
+				atom(numArray, parentId, j, k, end);	
+				parentId = undefined;
+				j = undefined;
+				k = undefined;		
+			}
+		}
+		function atom(numArray, i, j, k, end){
+			var temp, flag = i, len = numArray.length;			
+			var minLeaf = (k == undefined || k > end) ? j : (numArray[j] < numArray[k] ?  j : k);
+			//将递归改为循环
+			while(true){
+				if(numArray[i] > numArray[minLeaf]){
+					temp = numArray[i];
+					numArray[i] = numArray[minLeaf];
+					numArray[minLeaf] = temp;
+
+					var m = minLeaf * 2 + 1, n = minLeaf * 2 + 2;
+					if(m < end){						
+						i = minLeaf;
+						minLeaf = numArray[m] < numArray[n] ? m : n;
+					}else if(m == end){						
+						if(numArray[minLeaf] > numArray[m]){
+							temp = numArray[minLeaf];
+							numArray[minLeaf] = numArray[m];
+							numArray[m] = temp;
+						}
+						break;
+					}else if(m > end){
+						break;
+					}
+				}else{
+					break;
+				}
+			}
+		}
+	}
+	function insertSort2(numArray){
+		var orderArray = [],
+			len = numArray.length;
+		orderArray[0] = numArray[0];
+		for(var i = 1; i < len; i++){
+			if(numArray[i] < orderArray[0]){
+				for(var n = i - 1; n >= 0; n--){
+					orderArray[n + 1] = orderArray[n];
+				}
+				orderArray[0] = numArray[i];
+			}else{
+				for(var j = i - 1; j >= 0; j--){
+					if(numArray[i] > orderArray[j]){
+						for(var m = i - 1; m > j; m--){
+							orderArray[m + 1] = orderArray[m];
+						}
+						orderArray[j + 1] = numArray[i]; 
+						break;
+					}				
+				}
+			}	
+			//$("#result").append("<li>" + orderArray.join() + "</li>");				
+		}
+	}
+	function insertSort(numArray){
+		var len = numArray.length,
+			temp;		
+		for(var i = 1; i < len; i++){			
+			temp = numArray[i];
+			for(var j = i - 1; j >= 0; j--){
+				if(temp >= numArray[j]){	
+					numArray[j + 1] = temp;					
+					break;
+				}else{
+					numArray[j + 1] = numArray[j];
+					if(j == 0){
+						numArray[0] = temp;
+					}
+				}
+			}
+			
+			//$("#result").append("<li>" + numArray.join() + "</li>");	
+		}
+	}
+	function shellSort(numArray){
+		var len = numArray.length,
+			temp;
+		var interval = Math.floor(len/2);
+		while(interval >= 1){
+			for(var i = interval; i < len; i++){
+				temp = numArray[i];
+				var j = i - interval;				
+				while(j >= 0){
+					if(temp >= numArray[j]){
+						numArray[j + interval] = temp;
+						break;
+					}else{
+						numArray[j + interval] = numArray[j];
+						if(j - interval < 0){
+							numArray[j] = temp;
+						}
+					}
+					j = j - interval;
+				}
+			}
+			interval = Math.floor(interval/2);
+			//$("#result").append("<li>" + numArray.join() + "</li>");	
+		}
+	}
+	function mergeSort(numArray){
+		var len = numArray.length;
+		var interval = Math.ceil(len / 2);
+
+		numArray = cut(numArray, interval);
+		//$("#result").append("<li>" + numArray.join() + "</li>");
+
+		function cut(numArray, interval){
+			var leftArray = [], 
+				rightArray = [];
+			var len = numArray.length;
+			leftArray = numArray.slice(0, interval);
+			if(leftArray.length > 1){
+				leftArray = cut(leftArray, Math.ceil(leftArray.length / 2));
+			}
+			rightArray = numArray.slice(interval, len);
+			if(rightArray.length > 1){
+				rightArray = cut(rightArray, Math.ceil(rightArray.length / 2));
+			}
+			return atom(leftArray, rightArray);
+		}
+		
+		function atom(arr1, arr2){
+			var i = 0, j = 0, k = 0, tempArray = [];
+			while(i < arr1.length && j < arr2.length){
+				if(arr1[i] < arr2[j]){
+					tempArray[k] = arr1[i];
+					i++;						
+				}else{
+					tempArray[k] = arr2[j];
+					j++
+				}
+				k++;
+			}
+			if(i < arr1.length){
+				for(var m = i; i < arr1.length; i++){
+					tempArray[k++] = arr1[i];
+				}
+			}else{
+				for(var n = j; j < arr2.length; j++){
+					tempArray[k++] = arr2[j];
+				}
+			}
+			return tempArray;
+		}		
+	}
+	var sorts = [
+		bubbleSortCreator(),
+		fastSortCreator(),
+		choiceSortCreator(),
+		heapSortCreator(),
+		insertSortCreator(),
+		shellSortCreator(),
+		mergeSortCreator()
+	];
+	function sortHandler(index, inputId){
+		inputId = inputId || "sortNum";
+		var sortNum = $("#" + inputId).textbox("getValue");
+		sorts[index].sort(generatorRandomNums(20000));
+		
+		//sorts[index].sort(sortNum);
+	}
+	//49,38,65,97,76,13,27,49,55,4
+	//490,382,6,927,376,135,7,469,55,9,439,38,635,97,76,143,247,409,505,4,349,384,65,917,760,123,274,49,545,44,43,348,655,967,776,13,27,849,5,32
+	function generatorRandomNums(num){
+		var numArray = [];
+		for(var i = 0; i < num; i++){
+			numArray[i] = Math.floor(Math.random() * ( 1000 + 1));
+		}
+		return numArray.join();
+	}
+</script>
+</head>
+
+<body>
+	<div id="container">
+		<input id="sortNum" class="easyui-textbox" style="width:300px;">
+		<a href="javascript:void(0)" onclick="sortHandler(0)" class="easyui-linkbutton">冒泡排序</a>
+		<a href="javascript:void(0)" onclick="sortHandler(1)" class="easyui-linkbutton">快速排序</a>
+		<a href="javascript:void(0)" onclick="sortHandler(2)" class="easyui-linkbutton">直接选择排序</a>
+		<a href="javascript:void(0)" onclick="sortHandler(3)" class="easyui-linkbutton">堆排序</a>
+		<a href="javascript:void(0)" onclick="sortHandler(4)" class="easyui-linkbutton">直接插入排序</a>
+		<a href="javascript:void(0)" onclick="sortHandler(5)" class="easyui-linkbutton">希尔排序</a>
+		<a href="javascript:void(0)" onclick="sortHandler(6)" class="easyui-linkbutton">归并排序</a>
+		<ul id="result"></ul>			 
+	</div>
+</body>
+</html>

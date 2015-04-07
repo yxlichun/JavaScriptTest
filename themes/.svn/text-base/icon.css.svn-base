@@ -1,0 +1,84 @@
+.icon-blank{
+	background:url('icons/blank.gif') no-repeat center left;
+}
+.icon-add{
+	background:url('icons/edit_add.png') no-repeat center left;
+}
+.icon-edit{
+	background:url('icons/pencil.png') no-repeat center left;
+}
+.icon-remove{
+	background:url('icons/edit_remove.png') no-repeat center left;
+}
+.icon-save{
+	background:url('icons/filesave.png') no-repeat center left;
+}
+.icon-cut{
+	background:url('icons/cut.png') no-repeat center left;
+}
+.icon-ok{
+	background:url('icons/ok.png') no-repeat center left;
+}
+.icon-no{
+	background:url('icons/no.png') no-repeat center left;
+}
+.icon-cancel{
+	background:url('icons/cancel.png') no-repeat center left;
+}
+.icon-reload{
+	background:url('icons/reload.png') no-repeat center left;
+}
+.icon-search{
+	background:url('icons/search.png') no-repeat center left;
+}
+.icon-print{
+	background:url('icons/print.png') no-repeat center left;
+}
+.icon-help{
+	background:url('icons/help.png') no-repeat center left;
+}
+.icon-undo{
+	background:url('icons/undo.png') no-repeat center left;
+}
+.icon-redo{
+	background:url('icons/redo.png') no-repeat center left;
+}
+.icon-back{
+	background:url('icons/back.png') no-repeat center left;
+}
+.icon-sum{
+	background:url('icons/sum.png') no-repeat center left;
+}
+.icon-tip{
+	background:url('icons/tip.png') no-repeat center left;
+}
+.icon-filter{
+	background:url('icons/filter.png') no-repeat center left;
+}
+
+
+.icon-mini-add{
+	background:url('icons/mini_add.png') no-repeat center left;
+}
+.icon-mini-edit{
+	background:url('icons/mini_edit.png') no-repeat center left;
+}
+.icon-mini-refresh{
+	background:url('icons/mini_refresh.png') no-repeat center left;
+}
+
+.icon-large-picture{
+	background:url('icons/large_picture.png') no-repeat center left;
+}
+.icon-large-clipart{
+	background:url('icons/large_clipart.png') no-repeat center left;
+}
+.icon-large-shapes{
+	background:url('icons/large_shapes.png') no-repeat center left;
+}
+.icon-large-smartart{
+	background:url('icons/large_smartart.png') no-repeat center left;
+}
+.icon-large-chart{
+	background:url('icons/large_chart.png') no-repeat center left;
+}
