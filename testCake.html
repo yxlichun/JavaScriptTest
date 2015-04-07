@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>模板文件</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<style type="text/css">
+	#test{
+		left: 200px;
+	}
+</style>
+<script type="text/javascript">
+	// var i = "hi";
+	// var j = +i;
+	// //alert(j);	
+
+	// var s = "a,b,c";
+	// //var strArray = [ s ];
+	// var strArray2 = ["a","b","c"];
+	// var objArray = Object(s);	
+	// var mergeArray = $.merge(strArray2,objArray);
+	// //alert(objArray.length);
+
+	// var arr = [];
+	// //alert(strArray2.slice(2).toString());
+	// //alert(arr.slice.call(strArray2).toString());
+	// //alert(objArray[0]);
+
+	// // function Class1(){ 
+	// // 	this.name = "class1"; 
+	// // 	this.showNam = function(){ 
+	// // 		alert(this.name); 
+	// // 	} 
+	// // } 
+	// // function Class2(){ 
+	// // 	this.name = "class2"; 
+	// // } 
+	// // var c1 = new Class1(); 
+	// // var c2 = new Class2(); 
+	// // c1.showNam.call(c2); 
+
+	// function Class1() { 
+	// 	this.showTxt = function(txt){ 
+	// 		alert(txt); 
+	// 	} 
+	// } 
+	// function Class2(){ 
+	// 	Class1.call(this); 
+	// } 
+	// var c2 = new Class2(); 
+	// //c2.showTxt("cc");
+
+	// /////////////////////////////////////////////////////////////
+	// var k1,k2;
+	// k1 = k2 = 5;
+	// //alert("k1:" + k1 + "; k2:" + k2); 
+	// k2 = 10;
+	// //alert("k1:" + k1 + "; k2:" + k2); 
+	
+	// ////////////////////////////////////////////
+	// var testJ = $("");
+	// alert(testJ.version);
+	$(function(){
+		alert($("#test").css("left"));
+	})
+</script>
+</head>
+
+<body>
+	<div id="test"></div>
+</body>
+</html>

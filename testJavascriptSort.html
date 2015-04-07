@@ -1,0 +1,65 @@
+<html> 
+    <head></head> 
+    <script> 
+        function addOption(object, object2) { 
+            each(object2, function(o, index) { 
+                object.options[index] = o; 
+            }) 
+        } 
+        function sortlist(sortName,isDesc) { 
+            var what = document.getElementById(sortName); 
+            this._options = map(what.options, function(o) { 
+                return o; 
+            }); 
+            this._options.sort( function(a, b) { 
+                if (a.text > b.text) { 
+                    return isDesc == true ? 1 : -1; 
+                } else { 
+                    return isDesc == true ? -1 : 1; 
+                } 
+            }); 
+            what.options.length = 0;// clear current options 
+            addOption(what, this._options); 
+        } 
+        function map(object, callback, thisp) { 
+            var ret = []; 
+            each.call(thisp, object, function() { 
+                ret.push(callback.apply(thisp, arguments)); 
+            }); 
+            return ret; 
+        } 
+        function each(object, callback) { 
+            if (undefined === object.length) { 
+                for ( var name in object) { 
+                    if (false === callback(object[name], name, object)) 
+                        break; 
+                } 
+            } else { 
+                for ( var i = 0, len = object.length; i < len; i++) { 
+                    if (i in object) { 
+                        if (false === callback(object[i], i, object)) 
+                            break; 
+                    } 
+                } 
+            } 
+        } 
+        var sOrder = true; 
+        function sort(){         
+            if(sOrder){ 
+                sOrder    = false; 
+            }else{ 
+                sOrder    = true; 
+            } 
+            sortlist("select1",sOrder); 
+        } 
+    </script> 
+    <body> 
+        <select id="select1" size=6> 
+            <option>111</option> 
+            <option>333</option> 
+            <option>444</option> 
+            <option>222</option> 
+            <option>333</option> 
+        </select> 
+        <input type=button value="sort" onclick="sort();"> 
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>this</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<script type="text/javascript">
+///////////两种获得类的私有变量的方法
+///////////TYPE1 不得不感慨 this就是个桥梁啊
+	var Book = function(isbn, title, author){
+		var isbn = "188010";
+		var title = "beautiful woman";		
+		this.getTitle = function(){
+			return title;
+		}		
+	}
+	var lcBook = new Book();
+	console.log(lcBook.getTitle());
+//////////TYPE2
+	var Book2 = function(isbn, title, author){
+		var isbn = "188010";
+		var title = "beautiful woman";
+		var getIsbn = function(){
+			return isbn;
+		}
+		return getIsbn;	
+	}
+	var lcBook2 = new Book2();
+	console.log(lcBook2());
+////////////////////////////////
+	var Book3 = function(isbn, title, author){
+		this.lichun = "good";
+	}
+	Book3.prototype.lichun = "verygood";
+	var lcBook3 = new Book3();
+	console.log(lcBook3.lichun);
+////////////////////常量
+	var Class = (function(){
+		var constant = {
+			'LC' : "beautiful",
+			'ZU' : "veryBeautiful"
+		}
+		var returnFun = function(){
+			
+		}
+		returnFun.getConstant = function(name){
+			return constant[name];
+		}
+		return returnFun;
+	})();
+	console.log(Class.getConstant("ZU"));	
+/////////////////////////继承 extend
+	function extend(subClass, superClass){
+		var F = function(){};
+		F.prototype = superClass.prototype;
+		subClass.prototype = new F();
+		subClass.prototype.constructor = subClass;
+	}
+</script>
+</head>
+
+<body>
+</body>
+</html>

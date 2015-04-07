@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sort</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<script type="text/javascript">	
+	var sortType = {
+		bubbleSort : bubbleSort,
+		fastSort : fastSort
+	}
+	function sortHandler(sortName){		
+		var sortNum = $("#sortNum").textbox("getValue");
+		//验证数据的合法性
+		var verifyStr = verifyInput(sortNum);
+		if(verifyStr.length != 0){
+			alert(verifyStr);
+		}else{
+			//通过合法性验证
+			var strArray = sortNum.split(","),
+				numArray = [];
+			for(var i = 0, len = strArray.length; i < len; i++){
+				numArray[i] = parseInt(strArray[i]);
+			}
+			var startTime = new Date();
+			var sortStr = sortFactory(sortType[sortName], numArray);
+			var endTime = new Date();
+			$("#result").append("<li>耗时：" + (endTime - startTime) + "</li>");
+		}
+		
+	}
+	function sortFactory(sortName, sortArray){
+		return sortName(sortArray);
+	}
+	function verifyInput(str){
+		var responseMessage = "";
+		if(str.indexOf("\,") == -1){
+			responseMessage = "请至少提交两个数字，中间以逗号分隔。";
+		}else{
+			var numArray = str.split(","),
+				re = new RegExp("[0-9]+");
+			for(var i = 0, len = numArray.length; i < len; i++){
+				if(!re.test(numArray[i])){
+					responseMessage = "请确保输入均为数字。";
+					break;
+				}
+			}
+		}
+		return responseMessage;
+	}
+	function bubbleSort(numArray){
+		var len = numArray.length,
+			keyNum, flag = true;
+		for(var i = 0; i < len; i++){	
+			flag = true;		
+			for(var j = 0; j < len - i; j++){
+				if(numArray[j] > numArray[j+1]){
+					keyNum = numArray[j];
+					numArray[j] = numArray[j+1];
+					numArray[j+1] = keyNum;
+					flag = false
+				}
+			}
+			$("#result").append("<li>" + numArray.join() + "</li>");
+			if(flag){
+				break;
+			}
+			
+		}
+	}
+	function fastSort(numArray, start, end){
+		var len = numArray.length;
+		if(start == undefined)
+			start = 0;
+		if(end == undefined)
+			end = len;
+
+		var	keyNum = numArray[start], 
+			flag = start,
+			type = 1,
+			startKeep = start,
+			endKeep = end;
+
+		if(end == start){
+			return;
+		}else{
+			while(start < end){
+				if(type == 1){
+					if(numArray[end] < keyNum){
+						numArray[flag] = numArray[end];					
+						flag = end;
+						start ++;
+						type = 2;
+					}else{
+						end --;
+					}
+				}else{
+					if(numArray[start] > keyNum){
+						numArray[flag] = numArray[start];
+						flag = start;
+						end --;	
+						type = 1;
+					}else{
+						start ++;
+					}
+				}				
+			}			
+			numArray[flag] = keyNum;
+			$("#result").append("<li>" + numArray.join() + "</li>");
+			if (flag != 0)
+				fastSort(numArray, startKeep, flag);
+			if (flag != len)
+				fastSort(numArray, flag + 1, endKeep);	
+		}
+
+	}
+	//49,38,65,97,76,13,27,49,55,4
+	//490,382,6,927,376,135,7,469,55,9,439,38,635,97,76,143,247,409,505,4,349,384,65,917,760,123,274,49,545,44,43,348,655,967,776,13,27,849,5,32
+</script>
+</head>
+
+<body>
+	<div id="container">
+		<input id="sortNum" class="easyui-textbox" style="width:300px;">
+		<a href="javascript:void(0)" onclick="sortHandler('bubbleSort')" class="easyui-linkbutton">冒泡排序</a>
+		<a href="javascript:void(0)" onclick="sortHandler('fastSort')" class="easyui-linkbutton">快速排序</a>
+		<ul id="result"></ul>			 
+	</div>
+</body>
+</html>

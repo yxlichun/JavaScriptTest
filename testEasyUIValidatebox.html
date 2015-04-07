@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>EasyUI验证</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<script type="text/javascript" src="scripts/validatebox.js"></script>
+
+<link rel="stylesheet" type="text/css" href="themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css" href="themes/icon.css" />
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<script type="text/javascript">
+$(function(){
+  $('#uiform input').each(function () {
+        if ($(this).attr('required') || $(this).attr('validType'))
+                $(this).validatebox();
+        })
+ });
+function submitForm(){
+	$("#form").submit();
+}
+
+</script>
+</head>
+
+<body>
+<div id="container" class="easyui-panel" title="表单样式" style="width:500px; padding:10px;">
+	<form id="form" action="" method="post">
+		<table class="grid" id="uiform">
+		<tr>
+			<td>登录名：</td>
+			<td><input required="true" id="txtUsername" class="txt03" /></td>
+			<td>真实姓名：</td>
+			<td><input id="txtTruename" required="true" class="txt03" /></td>
+		</tr>
+		<tr>
+			<td>登录密码：</td>
+			<td><input validType="safepass"  required="true" id="txtPassword" name="password" type="password" class="txt03" /></td>
+			<td>Email：</td>
+			<td><input id="txtEmail" name="email"  validType="email" type="text" class="txt03" /></td>
+		</tr>
+		<tr>
+			<td>身份证号：</td>
+			<td><input validType="idcard" id="txtIdcard" name="idcard" type="text" class="txt03" /></td>
+			<td>QQ：</td>
+			<td><input validType="QQ" id="txtQq" name="qq" type="text" class="txt03" /></td>
+		</tr>
+		<tr>
+			<td>手机：</td>
+			<td><input validType="mobile" id="txtMobile" name="mobile" type="text" class="txt03" /></td>
+			<td>电话：</td>
+			<td><input id="txtTel" name="tel" type="text" class="txt03" /></td>
+		</tr>
+		<tr>
+			<td>家庭住址：</td>
+			<td colspan="3"><input validType="equalTo[txtMobile]" style="width:80%" id="txtHomeaddr" name="homeaddr" type="text" class="txt03" /></td>
+		</tr>
+		<tr>
+			<td>备注：</td>
+			<td colspan="3"> <input type="text" style="width:80%" class="txt03" id="txtRemark"></textarea></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td colspan="3">
+				<input id="Checkbox1" type="checkbox" />
+				<label>超级管理员</label>&nbsp;&nbsp;
+				<input id="Checkbox2" type="checkbox" />
+				<label>禁用</label>
+			</td>
+		</tr> 	
+	
+		</table>
+		<div style="text-align:center;padding:5px">
+			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()"> Submit </a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()"> Clear </a>
+		</div>
+	</form>
+</div>
+</body>
+</html>

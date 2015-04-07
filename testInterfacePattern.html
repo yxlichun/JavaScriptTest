@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>测试Javascript接口模式</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<script type="text/javascript">
+//constructor
+var Interface = function(name,methods){
+	this.name = name;
+	this.methods = [];
+	if(arguments.length != 2){
+		throw new Error("constructor Interface called with " + arguments.length + "arguments, but expected exactly 2 arguments.");
+	}
+	for(var i = 0, len = methods.length; i < len; i++){
+		var method = methods[i];
+		if(typeof method !== "string"){
+			throw new Error("constructor Interface expect method names to be passed in as a string.");
+		}
+		this.methods.push(method);
+	}
+}
+//static method
+Interface.ensureImplements = function(object){
+	if(arguments.length < 2){
+		throw new Error("Function Interface.ensureImplements called with " + arguments.length +"arguments, but expected at least 2.");
+	}
+	for(var i = 1, len = arguments.length; i < len; i++){
+		var interface = arguments[i];
+		if(interface.constructor !== Interface){
+			throw new Error("Function Interface.ensureImplements expects arguments two and above to be instances of Interface.");
+		}
+		for(var j = 0, methodLen = interface.methods.length; j < methodLen; j++){
+			var method = interface.methods[i];			
+			if(!object[method] || typeof object[method] != 'function'){
+				throw new Error("Function Interface.ensureImplements object does not implement the " + interface.name + " interface.method " + method + " was not found.");
+			}			
+		}
+	}
+}
+
+var interface1 = new Interface('interface1',['method1','method2']);
+var interface2 = new Interface('interface2',['method3','method4','method5']);
+
+// var implementInterface ={
+// 	 method1 : function(){},
+// 	 method2 : function(){},
+// 	 method3 : function(){},
+// 	 method4 : function(){},
+// 	 method5 : function(){}
+// }
+var implementInterface = function(){
+
+}
+implementInterface.method1 = function(){};
+implementInterface.method2 = function(){};
+implementInterface.method3 = function(){};
+implementInterface.method4 = function(){};
+implementInterface.method5 = function(){};
+
+function checkImplement(){
+	Interface.ensureImplements(implementInterface,interface1,interface2);
+}
+checkImplement();
+</script>
+</head>
+
+<body>
+</body>
+</html>

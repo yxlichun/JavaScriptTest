@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>获得表单数据</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css" href="themes/icon.css" />
+<script type="text/javascript">
+	function submitForm(){
+		//获得input text的值
+		var name1 = $("[name='name']").attr("value");//正确 原生
+		var name2 = $("[name='name']").val();//正确 原生
+		var name3 = $("#name").textbox('getValue');//正确 EasyUI
+		
+		$("#name").textbox("setText","lichun3");//正确
+		//$("[name='name']").textbox("setText","lichun3");//错误
+		$("#email").val("lichun4");//正确
+		//$("#name").val("lichun5");//错误
+
+		//$("[name^='string']").val()
+		//获得input radio选中的值
+		var sex = $("[name='sex']:checked").val();
+		$("[name='sex']:eq(1)").attr("checked","checked");
+		//貌似只有使用中括号时才可以使用:checked
+
+
+		//获得easyUI 时间控件的值
+		//var birthday = $("#test input[name='birthday']").val();
+		var birthday = $("input[textboxname='birthday']").datebox('getValue');
+		//alert(birthday);
+
+		//获得select的值和文字
+		var politicalStatus = $("[name='politicalStatus']").val();
+		var politicalStatusText = $("[name='politicalStatus']").find("option:selected").text();							
+
+		//获得easyUI select的值
+		var language = $("#language").combobox('select', '0');
+		var language2 = $("[name='language']").val();
+
+		console.log(language);
+		console.log(language2);
+		//获得input checkbox的值
+		var habit = $("input[name='habit1']:checked").val();
+
+		var val = '';
+		$("input[name^='habit']:checked").each(function(){  
+		 	val += $(this).val() + ',';  
+		 });
+		alert(habit);
+	}
+</script>
+<style type="text/css">
+	#container{
+		padding: 20px;
+		width: 300px;
+		border: 1px solid #eee;
+		margin: 0 auto;
+	}
+	.item{
+		margin-bottom: 10px;
+	}
+	.item label{
+		display: inline-block;
+		width: 120px;
+	}
+
+</style>
+</head>
+<body>
+	
+	<div id="container" class="easyui-panel" title="表单样式" style="width:400px;">
+		<form id="form" action="" method="post">			
+			<div class="item">
+				<label>姓名</label>
+				<input type="text" name="name" id="name" class="easyui-textbox"  required="true"/>
+			</div>
+			<div class="item">
+				<label>电子邮件</label>
+				<input type="text" name="email" id="email"/>
+			</div>
+			<div class="item">
+				<label>性别</label>
+				<input name="sex" type="radio" value="1" />男
+				<input name="sex" type="radio" value="2" />女
+			</div>
+			<div class="item">
+				<label>出生日期</label>
+				<input id="birthday" name="birthday" type="text" class="easyui-datebox"/>
+			</div>
+			<div class="item">
+				<label>政治面貌</label>
+				<select name="politicalStatus">
+					<option value="type1">共产党员</option>
+					<option value="type2">预备党员</option>
+					<option value="type3">共青团员</option>
+					<option value="type4">其他</option>
+				</select>
+			</div>
+			<div class="item">
+				<label>语言</label>
+				<select class="easyui-combobox" name="language" id="language">
+					<option value="ar">Arabic</option>
+					<option value="">空字符串</option>
+					<option value="0">零值</option>
+					<option value="zh-cht">Chinese Traditional</option>
+					<option value="cs">Czech</option>
+					<option value="da">Danish</option>
+					<option value="nl">Dutch</option>
+					<option value="en" selected="selected">English</option>
+				</select>
+			</div>			
+			<div class="item">
+				<label>爱好</label>
+				<input name="habit1" type="checkbox" value="1" />橘子
+				<input name="habit2" type="checkbox" value="2" />苹果
+				<input name="habit3" type="checkbox" value="3" />香蕉
+			</div>			
+			<div style="text-align:center;padding:5px">
+	            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()"> Submit </a>
+	            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()"> Clear </a>
+        	</div>
+		</form>
+	</div>
+</body>
+</html>

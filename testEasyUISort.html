@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>EasyUI 排序</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<script type="text/javascript">
+$(function(){
+	var optionsList = [];
+	var option = '<option value="">---请选择---</option>';					
+	optionsList.push(option);
+	option = '<option value="13002">13002</option>';
+	optionsList.push(option);
+	option = '<option value="13001">13001</option>';
+	optionsList.push(option);
+	option = '<option value="13003">13003</option>';
+	optionsList.push(option);
+
+	optionsList = optionsList.sort(function(a,b){
+		var re = /value="(\d*)"/;
+		re.test(a);
+		a = parseInt(RegExp.$1);
+		re.test(b);
+		b = parseInt(RegExp.$1);
+		return a-b;
+	});	
+	$("#selectorId").html(optionsList.join(""));
+})
+	
+</script>
+</head>
+
+<body>
+	<select id="selectorId"></select>
+</body>
+</html>
