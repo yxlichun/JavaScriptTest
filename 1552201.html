@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Backbone</title>
+<script type="text/javascript"> 
+    //遍历DOM树 
+    function getElementsByClass(className){
+        var base = document.getElementsByTagName("body")[0];
+        var arr = [];        
+        function search(node, className, arr){
+            var nodeArray = node.childNodes;
+            for(var i = 0, len = nodeArray.length; i < len; i++){
+                if(nodeArray[i].className == className){
+                    arr.push(nodeArray[i]);
+                }
+                search(nodeArray[i], className, arr);
+            }
+        }
+        search(base, className, arr);
+        return arr;
+    }
+    function trim(str){
+        //return str.replace(/(^\s*)|(\s*$)/g, '');
+        var reg = /^\s*(.*)\s*$/g;
+        return reg.exec(str)[1];
+    }
+    window.onload = function(){
+        var nodeArray = getElementsByClass("flag");
+        for(var i = 0, len = nodeArray.length; i < len; i++){
+            nodeArray[i].style.backgroundColor = "red";
+        }
+        var str = "       李淳          ";
+        alert("|" + trim(str) + "|");
+    }
+</script>
+<style type="text/css"> 
+    .outer{
+        width: 200px;
+        height: 200px;
+        background-color: #c0c0c0;
+    }
+    .flag{
+        width: 100px;
+        height: 100px;
+        background-color: #ff9900;
+    }
+</style>
+</head>
+
+<body>
+    <div class="outer">
+       <div class="flag"></div>
+    </div>
+	<div class="outer">
+       <div class="flag"></div>
+    </div>
+</body>
+</html>

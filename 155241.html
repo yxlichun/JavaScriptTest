@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Backbone</title>
+<script type="text/javascript">
+var Obj = function(msg){
+    this.msg = msg;
+    this.shout = function(){
+        alert(this.msg);
+    }  
+    this.waitAndShout = function(){
+        // var that = this;
+        // setTimeout(that.shout.call(that), 5000);
+        
+         setTimeout(this.shout, 5000);
+    }
+}
+var o = new Obj("haha");
+o.waitAndShout();
+
+function checkEmailAddress(email){
+    var reg = /^[a-zA-Z0-9\_]+\@[a-zA-Z0-9\_]+\.[a-zA-Z0-9]$/;
+    return reg.test(email);
+}
+console.log(checkEmailAddress("yxlichun@126.com"));
+console.log(checkEmailAddress("yxlichun126.com"));
+
+
+// var fragrament = document.createFragrament();
+// ​var example = document.createElement("div");
+// ​example.id="example";
+// ​example.appendTo(fragrament);
+// ​var slogan = document.createElement("p");
+// ​var sloganText = document.createTextNode("淘！你喜欢");
+// ​sloganText.appendTo(slogan);
+// ​slogan.className = "slogan";
+// ​slogan.appendTo(example);
+window.onload = function(){
+    var input = document.getElementById("test");
+    if(input.value == ""){
+        input.value = "请输入内容";
+        var inputClass = input.className;
+        input.className += " gray";
+    }
+    input.addEventListener("focus", function(){
+        var className = input.className;
+        if(this.value == "请输入内容" && className.indexOf("gray") != -1){
+            input.value = "";
+            input.className = className.substring(0, className.indexOf("gray"));
+        }
+    })
+    input.addEventListener("blur", function(){
+        var className = input.className;
+        if(this.value == "" ){
+            input.value = "请输入内容";
+            var inputClass = input.className;
+            input.className += " gray";
+        }
+    })
+}
+
+String.prototype.trim = function(){
+    var reg = /^\s*|\s*$/g;
+    this.replace(reg,"");
+}
+
+// 请编写一个JavaScript函数 parseQueryString，它的用途是把URL参数解析为一个对象，如：
+
+// var url = “http://www.taobao.com/index.php?key0=0&key1=1&key2=2.....”
+// var obj = parseQueryString(url);
+// alert(obj.key0)  // 输出0
+function parseQueryString(url){
+    var reg = /[\?\&](\w+)=(\w+)/g;
+    var result;
+    while((result = reg.exec(url)) != null){
+        console.log(result[1]);
+        console.log(result[2]);
+    }    
+}
+parseQueryString("http://www.taobao.com/index.php?key0=0&key1=1&key2=2");
+</script>
+<style type="text/css"> 
+    .gray{
+        color:#999;
+    }
+</style>
+</head>
+
+<body>
+    <form name="form">
+       <label for="name">文本框</label>
+       <input type="text" name="name" id="test">
+    </form>
+</body>
+</html>

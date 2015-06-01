@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<!--myLib-->
+<script type="text/javascript" src="myLib/interface.js"></script>
+<script type="text/javascript" src="myLib/extend.js"></script>
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<style type="text/css">
+	.father{
+		width: 200px;
+		height: 200px;
+		background-color: #ff9900;
+	}
+	.father2{
+		width: 200px;
+		height: 200px;
+		background-color: #0099ff;
+	}
+	.son{
+		width: 100px;
+		height: 100px;
+		background-color: #f0f0f0;
+		float: right;
+	}
+	.son2{
+		width: 100px;
+		height: 100px;
+		background-color: #fff;
+	}
+
+	.test{
+		width: 100px;
+		height: 100px;
+		background-color: #ff9900;
+		border: 1px solid #000;
+		margin: 10px;
+		clear: both;
+	}
+	#div1{
+		float: left;
+	}
+</style>
+
+<script type="text/javascript">	
+window.onload = function(){
+	//var father = document.getElementsByClassName("father");
+	//alert(father.length);
+	//father[0].className = "father2";
+	//alert(father.length);
+	//alert(document.getElementById("father").childNodes[1].parentNode.className);
+	//document.getElementById("father").removeChild(document.getElementById("father").childNodes[1]);
+	alert(document.getElementById("father").childNodes.length);
+}
+</script>
+</head>
+
+<body>	
+	<div class="father" id="father">
+		<div class="son">haha</div>xixi
+	</div>
+	<div id="div1" class="test"></div>
+	<div id="div2" class="test"></div>
+</body>
+</html>

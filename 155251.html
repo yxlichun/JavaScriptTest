@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Backbone</title>
+<script type="text/javascript"> 
+    // var name = "window";
+
+    // var Bob = {
+    //     name: "Bob",
+    //     showName: function(){
+    //         alert(this.name);
+    //     }
+    // };
+
+    // var Tom = {
+    //     name: "Tom",
+    //     showName: function(){
+    //         var fun = Bob.showName;
+    //         fun();
+    //     }
+    // };
+
+    // Bob.showName();　　//Bob
+    // Tom.showName();    //window
+
+    // var name = "Bob";  
+    // var nameObj ={  
+    //     name : "Tom",  
+    //     showName : function(){  
+    //         alert(this.name);  
+    //     },  
+    //     waitShowName : function(){
+    //         var that = this;
+    //         setTimeout(function(){
+    //             that.showName();
+    //         }, 1000);
+    //     }
+    // }; 
+     
+    //  nameObj.waitShowName();　　//Tom
+
+    // var name = "Bob";  
+    // var nameObj ={  
+    //     name : "Tom",  
+    //     showName : function(){  
+    //         alert(this.name);  
+    //     },  
+    //     waitShowName : function(){
+    //         var that = this;
+    //         //setTimeout("that.showName();", 1000);
+    //         eval("that.showName();");
+    //     }
+    // }; 
+     
+    // nameObj.waitShowName();
+
+    var fun = new Function("alert(this)");
+    fun();
+</script>
+<style type="text/css"> 
+
+</style>
+</head>
+
+<body>
+</body>
+</html>

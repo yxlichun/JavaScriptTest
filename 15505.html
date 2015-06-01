@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<!--myLib-->
+<script type="text/javascript" src="myLib/interface.js"></script>
+<script type="text/javascript" src="myLib/extend.js"></script>
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<style type="text/css">
+	
+</style>
+<script type="text/javascript">	
+// concat()	连接两个或更多的数组，并返回结果。
+// join()	把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔。
+// pop()	删除并返回数组的最后一个元素
+// push()	向数组的末尾添加一个或更多元素，并返回新的长度。
+// reverse()	颠倒数组中元素的顺序。
+// shift()	删除并返回数组的第一个元素
+// slice()	从某个已有的数组返回选定的元素
+// sort()	对数组的元素进行排序
+// splice()	删除元素，并向数组添加新元素。
+// toSource()	返回该对象的源代码。
+// toString()	把数组转换为字符串，并返回结果。
+// toLocaleString()	把数组转换为本地数组，并返回结果。
+// unshift()	向数组的开头添加一个或更多元素，并返回新的长度。
+// valueOf()	返回数组对象的原始值
+var LikeArray = function(arr){
+	if(typeof arr == "object" && arr.length){
+		this.arr = arr;
+	}else{
+		this.arr = [];
+	}	
+};
+LikeArray.prototype = {
+	concat : function(){
+		//检测参数长度
+		var len = arguments.length;
+		var returnArray = [];
+		if(len == 0){
+			return returnArray;
+		}else{
+			for(var i = 0; i < len; i++){
+				//检测数组类型
+				if(!arguments[i].length){
+					continue;
+				}
+				if(typeof arguments[i] == "string"){
+					var temp = arguments[i];
+					arguments[i] = [];
+					arguments[i].push(temp);
+				}
+				for(var j = 0; j < arguments[i].length; j++){
+					returnArray.push(arguments[i][j]);
+				}
+			}
+			return returnArray;
+		}
+	},
+	concat2 : function(){
+		var len = arguments.length;
+		if(len == 0){
+			return this.arr;
+		}else{
+			for(var i = 0; i < len; i++){
+				//检测数组类型
+				if(!arguments[i].length){
+					continue;
+				}
+				if(typeof arguments[i] == "string"){
+					var temp = arguments[i];
+					arguments[i] = [];
+					arguments[i].push(temp);
+				}
+				for(var j = 0; j < arguments[i].length; j++){
+					this.arr.push(arguments[i][j]);
+				}
+			}
+			return this.arr;
+		}
+	}
+}
+
+var likeArray = new LikeArray(['ok']);
+console.log(likeArray.concat2());
+console.log(likeArray.concat2("哈哈", ['1','2'], ['3', '4']));
+
+
+// myArray = ["zero", "one", "two"];
+// myArray.myMethod = function (sProperty) {
+//     alert(arguments.length > 0 ? this[sProperty] : this);
+// };
+
+// myArray.myMethod(); // prints "zero,one,two"
+// myArray.myMethod(1); // prints "one"
+// setTimeout(myArray.myMethod, 1000); // prints "[object Window]" after 1 second
+// setTimeout(myArray.myMethod, 1500, "1"); // prints "undefined" after 1,5 seconds
+// // let's try to pass the 'this' object
+// setTimeout.call(myArray, myArray.myMethod, 2000); // error: "NS_ERROR_XPC_BAD_OP_ON_WN_PROTO: Illegal operation on WrappedNative prototype object"
+// setTimeout.call(myArray, myArray.myMethod, 2500, 2); // same error
+
+
+// Enable the passage of the 'this' object through the JavaScript timers
+ 
+var __nativeST__ = window.setTimeout, __nativeSI__ = window.setInterval;
+ 
+window.setTimeout = function (vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */) {
+  var oThis = this, aArgs = Array.prototype.slice.call(arguments, 2);
+  return __nativeST__(vCallback instanceof Function ? function () {
+    vCallback.apply(oThis, aArgs);
+  } : vCallback, nDelay);
+};
+ 
+window.setInterval = function (vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */) {
+  var oThis = this, aArgs = Array.prototype.slice.call(arguments, 2);
+  return __nativeSI__(vCallback instanceof Function ? function () {
+    vCallback.apply(oThis, aArgs);
+  } : vCallback, nDelay);
+};
+
+myArray = ["zero", "one", "two"];
+myArray.myMethod = function (sProperty) {
+    alert(arguments.length > 0 ? this[sProperty] : this);
+};
+
+setTimeout(alert, 1500, "Hello world!"); // the standard use of setTimeout and setInterval is preserved, but...
+setTimeout.call(myArray, myArray.myMethod, 2000); // prints "zero,one,two" after 2 seconds
+setTimeout.call(myArray, myArray.myMethod, 2500, 2); // prints "two" after 2,5 seconds
+</script>
+</head>
+
+<body>
+	<div id="container"></div>
+</body>
+</html>

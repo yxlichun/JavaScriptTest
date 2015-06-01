@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Call</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<style type="text/css">
+	
+</style>
+<script type="text/javascript">
+	function temp1(){
+		console.log(this);
+		temp2();
+	}
+	function temp2(){
+		console.log(this);
+	}
+	var obj = {};
+	temp1.call(obj);
+
+	// function Class1(){
+	// 	this.name = "Class1";
+	// 	this.showName = function(){
+	// 		alert(this.name);
+	// 	}
+	// }
+	// function Class2(){
+	// 	this.name = "Class2";
+	// }
+	// var c1 = new Class1();
+	// var c2 = new Class2();
+
+	// c1.showName.call(c2);
+
+	//使用call来实现继承
+	function Class1(){
+		this.showTxt = function(txt){
+			alert(txt);
+		}
+		this.name = "Class1";
+	}
+	//静态方法
+	Class1.staticVar = 5;
+	//
+	Class1.prototype = {
+		getName : function(){return this.name},
+		getNameAgain : function(){return this.getName() + " haha"}
+	}
+
+	//继承
+	function Class2(){
+		Class1.call(this);
+	}
+	var c2 = new Class2();
+	c2.showTxt("cc");
+
+
+	var c1 = new Class1();
+	//c1.showTxt(c1.constructor.staticVar);//访问静态变量
+	//c1.showTxt(c1.name);
+	alert(c1.getNameAgain());
+
+	//静态私用变量、函数
+	var Class3 = (function(){
+		var staticVar = 0;
+		
+		return function(){
+			this.name = "class3";
+			this.getName = function(){
+				return this.name;
+			};
+			this.getStaticVar = staticVar;
+		}
+	})();
+
+	var c3 = new Class3();
+	
+
+	//
+	function Class4(name){
+		this.name = name;
+		this.getName = function(){
+			return name;
+		}
+	}
+	Class4.prototype.getName = function(){
+		return this.name + " : prototype";
+	}
+	var c4 = new Class4("lichun");	
+	alert(c4.getName());
+
+	function clone(object){
+		var F = function(){};
+		F.prototype = object;
+		return new F();
+	}
+	var Person = {
+		name : "lichun"
+	}
+	var reader = clone(Person);
+	alert(reader.name + "!!!");
+</script>
+</head>
+
+<body>
+	
+</body>
+</html>

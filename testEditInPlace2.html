@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>就地编辑</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<style type="text/css">
+	
+</style>
+<script type="text/javascript">
+//类式继承
+function EditInPlaceField(id, parent, value){
+	this.id = id;
+	this.value = value || 'default value';
+	this.parentElement = parent;
+
+	this.createElements(this.id);
+	this.attachEvents();
+}
+EditInPlaceField.prototype = {
+	createElements : function(id){
+		this.containerElement = document.createElement('div');
+		this.parentElement.appendChild(this.containerElement);
+
+		this.staticElement = document.createElement('span');
+		this.containerElement.appendChild(this.staticElement);
+		this.staticElement.innerHTML = this.value;
+
+		this.fieldElement = document.createElement('input');
+		this.fieldElement.type = 'text';
+		this.fieldElement.value = this.value;
+		this.containerElement.appendChild(this.fieldElement);
+
+		this.saveButton = document.createElement('input');
+		this.saveButton.type = 'button';
+		this.saveButton.value = 'Save';
+		this.containerElement.appendChild(this.saveButton);
+
+		this.cancelButton = document.createElement('input');
+		this.cancelButton.type = 'button';
+		this.cancelButton.value = 'Cancel';
+		this.containerElement.appendChild(this.cancelButton);
+		this.convertToText();
+	},
+	attachEvents : function(){
+		var that = this;
+		addEvent(this.staticElement, 'click', function(){that.convertToEditable();});
+		addEvent(this.saveButton, 'click', function(){that.save();});
+		addEvent(this.cancelButton, 'click', function(){that.cancel();});
+	},
+	convertToEditable : function(){
+		this.staticElement.style.display = 'none';
+		this.fieldElement.style.display = 'inline';
+		this.saveButton.style.display = 'inline';
+		this.cancelButton.style.display = 'inline';
+
+		this.setValue(this.value);
+	},
+	save : function(){
+		this.value = this.getValue();
+		var that = this;
+		var callback = {
+			success : function(){that.convertToText();},
+			failure : function(){alert('Error');}
+		}
+		ajaxRequest('GET','',callback);
+	},
+	cancel : function(){
+		this.convertToText();
+	},
+	convertToText : function(){
+		this.staticElement.style.display = 'inline';
+		this.fieldElement.style.display = 'none';
+		this.saveButton.style.display = 'none';
+		this.cancelButton.style.display = 'none';
+
+		this.setValue(this.value);
+	},
+	setValue : function(value){
+		this.fieldElement.value = value;
+		this.staticElement.innerHTML = value;
+	},
+	getValue : function(){
+		return this.fieldElement.value;
+	}
+};
+
+function EditInPlaceArea(id, parent, value){
+	EditInPlaceArea.superclass.constructor.call(this, id, parent, value);
+};//调用父类的构造函数
+extend(EditInPlaceArea, EditInPlaceField);
+
+//override 
+EditInPlaceArea.prototype.createElements = function(id){
+
+}
+EditInPlaceArea.prototype.convertToEditable = function(id){
+	
+}
+EditInPlaceArea.prototype.convertToText = function(id){
+	
+}
+</script>
+</head>
+
+<body>
+	
+</body>
+</html>

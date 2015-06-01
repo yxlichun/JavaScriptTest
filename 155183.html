@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Backbone</title>
+<script type="text/javascript" src="backbone.js"></script>
+<script type="text/javascript">
+//实现一个URI解析方法，把url里#之后的参数解析成指定的数据结构。
+function urlParser(s){
+        //+++++++++++答题区域+++++++++++
+        if(s.indexOf("#") != -1){
+            var str = s.split("#")[1];
+            var returnArray = str.split(/[/?]+/);
+            for(var i = 0; i < returnArray.length; i++){
+                if(returnArray[i].indexOf("=") != -1){
+                   var mapStr = returnArray[i];
+                   returnArray[i] = {};
+                   var subArray = mapStr.split("&");
+                   for(var j = 0; j < subArray.length; j++){
+                        var map = subArray[j].split("=");
+                        returnArray[i][map[0]] = map[1];
+                   }
+                }
+            }
+            return returnArray;
+
+        }
+
+
+                
+        //+++++++++++答题结束+++++++++++
+}
+
+try{
+        var url1 = "http://www.abc.com/m/s/#page/2/?type=latest_videos&page_size=20";
+        var url2 = "http://www.abc.com/m/s/#type=latest_videos&page_size=20";
+        var url3 = "http://www.abc.com/m/s/#page?type=latest_videos&page_size=20";
+
+        
+        console.log( urlParser(url1) );
+        console.log( urlParser(url2) );
+        console.log( urlParser(url3) );
+        
+        /*------[执行结果]------
+
+        ["page", "2", { "type": "latest_videos", "page_size": 20 }]
+        [{ "type": "latest_videos", "page_size": 20 }]
+        ["page", { "type": "latest_videos", "page_size": 20 }]
+        
+        ------------------*/
+        
+}catch(e){
+        console.error("执行出错，错误信息: " + e);
+}
+
+function test(){
+         this.name = 'taobao';
+         this.waitMes = function (){
+            var name = this.name;
+            setInterval(function(){console.log(name)}, 5000);
+         }
+}
+var test = new test();
+test.waitMes();
+</script>
+</head>
+<style type="text/css">
+ #test{
+    width: 100px;
+    height: 100px;
+    background-color: yellow !important;
+ }
+</style>
+<body>  
+        <div id="test" style="background-color:black;"></div>        
+</body>
+</html>
+
+

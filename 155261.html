@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Test</title>
+<script type="text/javascript"> 
+    var Obj = function(msg){
+        this.msg = msg;
+        this.shout = function(){
+            alert(this.msg);
+        }    
+        this.waitAndShout = function(){
+            var that = this;
+            setTimeout(that.shout, 5000);
+            //隔五秒钟后执行上面的shout方法
+        }
+        return this;
+    }
+    Obj("shouting").waitAndShout();
+</script>
+<style type="text/css"> 
+    #left{
+        width: 200px;
+        height: 200px;
+        background-color: #ff9900;
+        float: left;
+    }
+    #right{
+        height: 200px;
+        margin-left: 200px;
+        background-color: #c0c0c0;
+    }
+    .overlay {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      background: rgba(0,0,0,.8);
+    }
+</style>
+</head>
+
+<body>
+    <div id="left"></div>
+    <div id="right"></div>
+
+    <div class="overlay"></div>
+</body>
+</html>

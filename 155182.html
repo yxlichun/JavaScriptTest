@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Backbone</title>
+<script type="text/javascript" src="backbone.js"></script>
+<script type="text/javascript">
+//实现一个叫Man的类，包含attr, words, say三个方法。
+var Man;
+//+++++++++++答题区域+++++++++++
+Man = function(obj){
+    var that = {
+        sayWord : "",
+        "words-limit" : 0
+    };
+    
+    var wordsCount = 0;
+    var wordsArray = [];
+
+    for(var pro in obj){
+        this[pro] = obj[pro];
+        that[pro] = obj[pro];
+    }
+    this.attr = function(){
+        var len = arguments.length;
+        if(len == 1 && typeof arguments[0] != "object"){//getter
+            if(that[arguments[0]]){
+                return that[arguments[0]];
+            }else{
+                return "<用户未输入>";
+            }
+        }else if(len == 1 && typeof arguments[0] == "object"){//setter
+            for(var i in arguments[0]){
+                that[i] = arguments[0][i];
+            }
+        }else if(len == 2){
+            that[arguments[0]] = arguments[1];
+        }
+    };
+    this.words = function(str){
+        wordsArray.push(str);        
+    };
+    this.say = function(){
+        that.sayWord = "";
+        for(var j = 0; j < that["words-limit"]; j++){
+            that.sayWord += wordsArray[j];
+        }        
+        return that.fullname + that["words-emote"] + ":\""+that.sayWord + "\"";
+    }
+    return this;
+}
+
+//+++++++++++答题结束+++++++++++
+
+try{
+        
+        var me = Man({ fullname: "小红" });
+        var she = new Man({ fullname: "小红" });
+        
+        console.group();
+        console.info("我的名字是：" + me.attr("fullname") + "\n我的性别是：" + me.attr("gender"));
+        console.groupEnd();
+        /*------[执行结果]------
+
+        我的名字是：小红
+        我的性别是：<用户未输入>
+
+        ------------------*/
+
+        me.attr("fullname", "小明");
+        me.attr("gender", "男");
+        me.fullname = "废柴";
+        me.gender = "人妖"; 
+        she.attr("gender", "女");
+        
+        console.group();
+        console.info("我的名字是：" + me.attr("fullname") + "\n我的性别是：" + me.attr("gender"));
+        console.groupEnd();
+        /*------[执行结果]------
+
+        我的名字是：小明
+        我的性别是：男
+
+        ------------------*/
+        
+        console.group();
+        console.info("我的名字是：" + she.attr("fullname") + "\n我的性别是：" + she.attr("gender"));
+        console.groupEnd();
+        /*------[执行结果]------
+
+        我的名字是：小红
+        我的性别是：女
+
+        ------------------*/
+
+        me.attr({
+                "words-limit": 3,
+                "words-emote": "微笑"
+        });
+        me.words("我喜欢看视频。");
+        me.words("我们的办公室太漂亮了。");
+        me.words("视频里美女真多！");
+        me.words("我平时都看优酷！");
+        
+        console.group();
+        console.log(me.say());
+        /*------[执行结果]------
+
+        小明微笑："我喜欢看视频。我们的办公室太漂亮了。视频里美女真多！"
+
+        ------------------*/
+
+        me.attr({
+                "words-limit": 2,
+                "words-emote": "喊"
+        });
+
+        console.log(me.say());
+        console.groupEnd();
+        /*------[执行结果]------
+
+        小明喊："我喜欢看视频。我们的办公室太漂亮了。"
+
+        ------------------*/
+        
+}catch(e){
+        console.error("执行出错，错误信息: " + e);
+}
+
+</script>
+</head>
+
+<body>  
+                
+</body>
+</html>
+
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array</title>
+<script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easyui-1.4.min.js"></script>
+<!--myLib-->
+<script type="text/javascript" src="myLib/interface.js"></script>
+<script type="text/javascript" src="myLib/extend.js"></script>
+<link rel="stylesheet" type="text/css" href="css/custom.css" />
+<style type="text/css">
+	
+</style>
+
+<script type="text/javascript">	
+// 找出数字数组中最大的元素（使用Match.max函数）
+// 转化一个数字数组为function数组（每个function都弹出相应的数字）
+// 给object数组进行排序（排序条件是每个元素对象的属性个数）
+// 利用JavaScript打印出Fibonacci数（不使用全局变量）
+// 实现如下语法的功能：var a = (5).plus(3).minus(6); //2
+// 实现如下语法的功能：var a = add(2)(3)(4); //9
+var arr = [1,2,3,4];
+function convertToFun(arr){
+	var funArr = []
+	for(var i = 0, len = arr.length; i < len; i++){
+		funArr[i] = (function(k){
+			return function(){
+				alert(k);
+			}
+		})(arr[i]);
+	}
+	return funArr;
+}
+var funArr = convertToFun(arr);
+//funArr[1]();
+
+function sortForAttrCount(arr){
+	//类型检查
+	if(arr.length){
+		for()
+	}
+
+}
+</script>
+</head>
+
+<body>	
+	
+</body>
+</html>

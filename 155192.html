@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Backbone</title>
+<script type="text/javascript">
+    function foo(arr){
+        if(arr instanceof Array){
+            var obj = {};
+            for(var i = 0; i < arr.length; ){
+                if(obj[arr[i]]){//存在重复
+                    arr.splice(i, 1);
+                    console.log(i + ":删除");
+                }else{
+                    obj[arr[i]] = true;
+                    console.log(i + ":继续");
+                    i++;
+                }
+            }
+        }
+    }
+    var testArray = [0,3,2,5,2,2,5];
+    foo(testArray);
+    console.log(testArray);
+</script>
+<style type="text/css">
+ .body{
+    display: flex;
+    flex-flow:row warp;
+ }
+ .main{
+    order: 2;
+    width: 100%;
+    background-color: #c0c0c0;
+ }
+ .sub{
+    order: 1;
+    width: 200px;
+    background-color: #ff9900;
+ }
+ .extra{
+    order:3;
+    width: 200px;
+    background-color: #ff9900;
+ }
+</style>
+</head>
+
+<body>	
+	<div class="wrap">
+        <div class="header">Header</div>
+        <div class="body">
+            <div class="main"><div class="main-wrap-2"><p>main-wrap</p><p>main-wrap</p></div></div>
+            <div class="sub"><p>sub</p><p>sub</p><p>sub</p></div>
+            <div class="extra"><p>extra</p><p>margin-left:350px; background:#CC0;margin-left:350px; background:#CC0;</p></div>
+        </div>
+        <div class="footer">Footer</div>
+    </div>
+</body>
+</html>
